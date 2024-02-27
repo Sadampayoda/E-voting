@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\KandidatController;
 use App\Http\Controllers\KegiatanController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SuaraController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,5 +25,6 @@ Route::get('/', function () {
 Route::resource('kandidat', KandidatController::class);
 Route::resource('suara', SuaraController::class);
 Route::resource('kegiatan', KegiatanController::class);
-
+Route::resource('user-manejement', UserController::class);
+Route::get('search/user',[SearchController::class,'user'])->name('search.user');
 
