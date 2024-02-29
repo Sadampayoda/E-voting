@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kegiatan;
+use App\Models\Suara;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -14,35 +15,27 @@ class KegiatanController extends Controller
     public function index()
     {
         $data = Kegiatan::paginate(5);
-        
+
         // return $tanggal_sekarang;
-        $data->map(function($data){
-            
-            
-            $tahun_sekarang = date("Y-m-d");
-            $tahun = date("Y-m-d", strtotime($data->tahun));
-            // $waktu_sekarang = Carbon::now()->toTimeString();
-            // $tanggal_dari = Carbon::parse($data->tanggal_awal);
-            // $tanggal_sampai = Carbon::parse($data->tanggal_sampai);
-            // dd($tahun,$tahun_sekarang);
-            
-            if ($tahun == $tahun_sekarang) {
-                $data->status = 'Sudah Mulai';
-            } elseif ($tahun < $tahun) {
-                $data->status = 'Belum Mulai';
-            } else {
-                $data->status = 'Selesai';
-            }            
+        $data->map(function ($data) {
+            $tanggalSekarang = strtotime(date('Y-m-d'));
 
             
+            $tanggalDari = strtotime($data->tanggal_dari);
+            $tanggalSampai = strtotime($data->tanggal_sampai);
+
+            
+            if ($tanggalSekarang < $tanggalDari) {
+                $data->status = "Belum Mulai";
+            } elseif ($tanggalSekarang >= $tanggalDari && $tanggalSekarang <= $tanggalSampai) {
+                $data->status = "Sedang Berlangsung";
+            } else {
+                $data->status = "Selesai";
+            }
         });
-        // $tess = Kegiatan::all();
-        // $tes = Carbon::parse($tess[0]->tahun);
-        // $tahun_sekarang = date("Y");
-        // $tahun = date("Y", strtotime($tess[0]->tahun));
-        // return dd(strval($tahun) == strval($tahun_sekarang));
         
-        return view('admin.kegiatan.index',[
+
+        return view('admin.kegiatan.index', [
             'data' => $data
         ]);
     }
@@ -83,7 +76,11 @@ class KegiatanController extends Controller
      */
     public function show(Kegiatan $kegiatan)
     {
-        //
+
+        return view('admin.kegiatan.show', [
+            'data' => Suara::join('users', 'users.id', '=', 'suaras.id_user')->join('kegiatans', 'kegiatans.id', '=', 'suaras.id_kegiatan')->join('kandidats', 'kandidats.id_kegiatan', '=', 'kegiatans.id')->where('suaras.id_kegiatan', $kegiatan->id)->paginate(10),
+            'kegiatan' => $kegiatan->kegiatan
+        ]);
     }
 
     /**
@@ -108,9 +105,9 @@ class KegiatanController extends Controller
             'waktu_sampai' => 'required',
         ]);
 
-        
 
-        
+
+
         $data = Kegiatan::findOrFail($kegiatan->id);
         $data->update($request->all());
 
@@ -122,7 +119,7 @@ class KegiatanController extends Controller
      */
     public function destroy(Kegiatan $kegiatan)
     {
-        Kegiatan::where('id',$kegiatan->id)->delete();
+        Kegiatan::where('id', $kegiatan->id)->delete();
         return redirect()->back()->with('success', 'Data Kegiatan berhasil diperbarui.');
     }
 }

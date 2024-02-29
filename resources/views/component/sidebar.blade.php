@@ -5,7 +5,7 @@
             <a href="#"><span class="bi bi-alarm-fill pe-2"></span>Dashboard</a>
         </li>
         <li>
-            <a href="#"><span class="fa fa-cogs"></span> Data Santri</a>
+            <a href="{{route('santri.index')}}"><span class="fa fa-cogs"></span> Data Santri</a>
         </li>
         <li>
             <a href="{{route('kegiatan.index')}}"><span class="fa fa-paper-plane"></span> Kegiatan</a>
@@ -18,15 +18,7 @@
         </li>
     </ul>
 
-    <div class="footer">
-        <p>
-            Copyright &copy;
-            <script>
-                document.write(new Date().getFullYear());
-            </script> All rights reserved | This template is made with <i class="icon-heart"
-                aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
-        </p>
-    </div>
+    
 </nav>
 
 

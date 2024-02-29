@@ -16,8 +16,11 @@ return new class extends Migration
             $table->unsignedBigInteger('id_kegiatan');
             $table->foreign('id_kegiatan')->references('id')->on('kegiatans')->onDelete('cascade');
             $table->string('nama');
+            $table->string('nama_wakil');
             $table->string('nik');
+            $table->string('nik_wakil');
             $table->string('foto')->nullable();
+            $table->string('foto_wakil')->nullable();
             $table->text('visi');
             $table->text('misi');
             $table->timestamps();

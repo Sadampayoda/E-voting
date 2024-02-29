@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kandidat;
 use App\Models\Kegiatan;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -49,6 +50,25 @@ class SearchController extends Controller
 
     public function kandidat(Request $request)
     {
-        
+        $data =  Kandidat::where('id_kegiatan',$request->kandidat)->where('nama', 'like', '%' . $request->search . '%')->paginate(10);
+        if ($request->search == '') {
+            $data = Kandidat::where('id_kegiatan',$request->kandidat)->paginate(10);
+        }
+
+        return view('admin.kandidat.search',[
+            'data' => $data,
+            'id' => $request->kandidat
+        ]);
+    }
+
+    public function santri(Request $request)
+    {
+        $data =  User::where('name', 'like', '%' . $request->search . '%')->where('role','user')->paginate(10);
+        if ($request->search == '') {
+            $data = User::where('role','user')->paginate(10);
+        }
+        return view('admin.santri.search', [
+            'data' => $data
+        ]);
     }
 }
