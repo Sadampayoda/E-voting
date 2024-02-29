@@ -8,7 +8,7 @@
             <a href="#"><span class="fa fa-cogs"></span> Data Santri</a>
         </li>
         <li>
-            <a href="#"><span class="fa fa-paper-plane"></span> Kegiatan</a>
+            <a href="{{route('kegiatan.index')}}"><span class="fa fa-paper-plane"></span> Kegiatan</a>
         </li>
         <li>
             <a href="{{route('user-manejement.index')}}"><span class="fa fa-paper-plane"></span> User Manajement</a>

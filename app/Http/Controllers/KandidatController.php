@@ -10,9 +10,12 @@ class KandidatController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return view('admin.kandidat.index',[
+            'data' => Kandidat::where('id_kegiatan',$request->kandidat)->paginate(5),
+            'id' => $request->kandidat
+        ]);
     }
 
     /**
@@ -28,7 +31,30 @@ class KandidatController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required|string',
+            'nik' => 'required|string',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'visi' => 'required|string',
+            'misi' => 'required|string',
+        ]);
+
+        if ($request->hasFile('foto')) {
+            $fotoName = time() . '.' . $request->foto->extension();
+            $request->foto->move('image/kandidat', $fotoName);
+            $validatedData['foto'] = $fotoName;
+            
+        }
+
+        
+        
+
+        
+        Kandidat::create($validatedData);
+
+        
+        return redirect()->route('kandidat.index',['kandidat' => $request->id_kandidat])->with('success', 'Kandidat berhasil ditambahkan.');
+
     }
 
     /**

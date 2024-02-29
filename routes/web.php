@@ -27,4 +27,6 @@ Route::resource('suara', SuaraController::class);
 Route::resource('kegiatan', KegiatanController::class);
 Route::resource('user-manejement', UserController::class);
 Route::get('search/user',[SearchController::class,'user'])->name('search.user');
+Route::get('search/kegiatan',[SearchController::class,'kegiatan'])->name('search.kegiatan');
+Route::get('search/kandidat',[SearchController::class,'kandidat'])->name('search.kandidat');
 
