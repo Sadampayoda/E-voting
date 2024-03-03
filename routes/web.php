@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\KandidatController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\SantriController;
@@ -19,8 +20,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('component.app');
+
+Route::controller(BerandaController::class)->group(function(){
+    Route::get('/','index')->name('beranda.index');
+    Route::get('/login','login')->name('beranda.login');
+    Route::get('/lihat-kandidat/{id}','kandidat')->name('beranda.kandidat');
+    Route::post('/login','validasilogin')->name('beranda.validasi');
 });
 
 Route::resource('kandidat', KandidatController::class);
