@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
@@ -29,9 +30,9 @@
     </style>
 </head>
 
-<body>
+<body style="background: #eee">
 
-    <nav class="navbar navbar-expand-lg bg-dark ">
+    <nav class="navbar fixed-top p-2 navbar-expand-lg bg-dark ">
         <div class="container">
           <a class="navbar-brand text-light" href="#">E-Voting</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,9 +41,16 @@
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ms-auto">
               <a class="nav-link text-light active" aria-current="page" href="{{route('beranda.index')}}">Home</a>
-              <a class="nav-link text-light" href="#">Features</a>
-              <a class="nav-link text-light" href="#">Pricing</a>
-              <a class="nav-link text-light" href="{{route('beranda.login')}}">Login</a>
+              <a class="nav-link text-light" href="{{route('beranda.hasil')}}">Hasil E-voting</a>
+              {{-- <a class="nav-link text-light" href="#">Pricing</a> --}}
+
+              @if (auth()->user())
+                <a class="nav-link text-light" href="{{route('beranda.logout')}}">Logout</a>
+                
+              @else
+                <a class="nav-link text-light" href="{{route('beranda.login')}}">Login</a>
+                
+              @endif
             </div>
           </div>
         </div>

@@ -21,6 +21,7 @@
                 </ul>
             </div>
         @endif
+
         <div class="row">
             <div class="col-6 mb-2">
                 <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#createUserModal">

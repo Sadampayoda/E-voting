@@ -78,7 +78,7 @@ class KegiatanController extends Controller
     {
 
         return view('admin.kegiatan.show', [
-            'data' => Suara::join('users', 'users.id', '=', 'suaras.id_user')->join('kegiatans', 'kegiatans.id', '=', 'suaras.id_kegiatan')->join('kandidats', 'kandidats.id_kegiatan', '=', 'kegiatans.id')->where('suaras.id_kegiatan', $kegiatan->id)->paginate(10),
+            'data' => Suara::join('users', 'users.id', '=', 'suaras.id_user')->join('kegiatans', 'kegiatans.id', '=', 'suaras.id_kegiatan')->join('kandidats', 'kandidats.id', '=', 'suaras.id_kandidat')->where('suaras.id_kegiatan', $kegiatan->id)->paginate(10),
             'kegiatan' => $kegiatan->kegiatan
         ]);
     }
