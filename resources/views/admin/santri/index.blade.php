@@ -3,7 +3,7 @@
 @section('content')
     <div class="container mt-4">
         <div class="row">
-            <h1>Data Santri</h1>
+            <h1>Data BEM</h1>
         </div>
         <!-- Tabel Responsif -->
         @if (session()->has('success'))
