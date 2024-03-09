@@ -1,17 +1,23 @@
 <nav id="sidebar" class="active bg-warning">
     <p class="text-center fs-4"><img src="" class="logo">E-Voting</p>
     <ul class="list-unstyled components mb-5">
-        <li class="active">
-            <a href="{{route('beranda.admin')}}"><span class="bi bi-alarm-fill pe-2"></span>Dashboard</a>
-        </li>
+        @if (auth()->user()->role == 'admin')
+            <li class="active">
+                <a href="{{route('beranda.admin')}}"><span class="bi bi-alarm-fill pe-2"></span>Dashboard</a>
+            </li>
+            <li>
+                <a href="{{route('santri.index')}}"><span class=" fa fa-user"></span> Data BMI</a>
+            </li>
+            <li>
+                <a href="{{route('kegiatan.index')}}"><span class="bi bi-bar-chart-line"></span> Kegiatan</a>
+            </li>
+            <li>
+                <a href="{{route('user-manejement.index')}}"><span class="fa fa-user"></span> User Manajement</a>
+            </li>
+            
+        @endif
         <li>
-            <a href="{{route('santri.index')}}"><span class=" fa fa-user"></span> Data BMI</a>
-        </li>
-        <li>
-            <a href="{{route('kegiatan.index')}}"><span class="bi bi-bar-chart-line"></span> Kegiatan</a>
-        </li>
-        <li>
-            <a href="{{route('user-manejement.index')}}"><span class="fa fa-user"></span> User Manajement</a>
+            <a href="{{route('beranda.profile')}}"><span class="bi bi-person"></span> Profile</a>
         </li>
        
         <li>

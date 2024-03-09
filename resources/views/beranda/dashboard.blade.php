@@ -27,7 +27,7 @@
                 <div class="card shadow bg-danger">
                     <div class="card-body">
                         <h5 class="card-title">Total User</h5>
-                        <p class="card-text">{{$total_user}}</p>
+                        <p class="card-text">{{ $total_user }}</p>
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                 <div class="card shadow bg-primary">
                     <div class="card-body">
                         <h5 class="card-title">Total Kegiatan</h5>
-                        <p class="card-text">{{$total_kegiatan}}</p>
+                        <p class="card-text">{{ $total_kegiatan }}</p>
                     </div>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                 <div class="card shadow bg-warning">
                     <div class="card-body">
                         <h5 class="card-title">Total Kandidat</h5>
-                        <p class="card-text">{{$total_kandidat}}</p>
+                        <p class="card-text">{{ $total_kandidat }}</p>
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                 <div class="card shadow bg-success">
                     <div class="card-body">
                         <h5 class="card-title">Total Suara</h5>
-                        <p class="card-text">{{$total_suara}}</p>
+                        <p class="card-text">{{ $total_suara }}</p>
                     </div>
                 </div>
             </div>
@@ -68,17 +68,17 @@
         <div class="container mb-5 mt-5">
             <div class="row">
                 <div class="col border-bottom p-2 text-center">
-                    <h1>E-voting Hasil {{$kegiatan}}</h1>
+                    <h1>E-voting Hasil {{ $kegiatan }}</h1>
                 </div>
             </div>
             <div class="row d-flex justify-content-center mt-4 mb-5">
                 @if ($data)
-                    <div class="col">
+                    <div class="col-5">
                         <div id="hasil">
 
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-7">
                         <div id="hasil2">
 
                         </div>
@@ -105,44 +105,69 @@
         <script>
             document.addEventListener("DOMContentLoaded", function() {
 
-                var suaraKandidat = {!! json_encode($data) !!};
-
-
+                var suaraKandidat = {!! json_encode($chartHasil) !!};
+                console.log(suaraKandidat)
                 var dataGrafik = [];
-                suaraKandidat.forEach(function(item) {
-                    dataGrafik.push({
-                        name: item.nama,
-                        y: item.jumlah_suara
-                    });
-                });
+                // suaraKandidat.forEach(function(item) {
+                //     dataGrafik.push({
+                //         name: item.nama,
+                //         y: item.jumlah_suara
+                //     });
+                // });
 
 
 
 
                 Highcharts.chart('hasil2', {
                     chart: {
-                        type: 'column'
+                        type: 'spline'
                     },
                     title: {
-                        text: 'Grafik Suara Kandidat'
+                        text: 'Jumlah suara per tanggal'
                     },
-                    xAxis: {
-                        type: 'category',
-                        title: {
-                            text: 'Kandidat'
-                        }
+
+                    subtitle: {
+                        text: 'By Job Category. Source: <a href="https://irecusa.org/programs/solar-jobs-census/" target="_blank">IREC</a>.',
+                        align: 'left'
                     },
+
                     yAxis: {
                         title: {
                             text: 'Jumlah Suara'
                         }
                     },
-                    series: [{
-                        name: 'Jumlah Suara',
-                        colorByPoint: true,
-                        data: dataGrafik
-                    }]
+
+                    xAxis: {
+                        categories: {!! json_encode($dateRange) !!}
+                    },
+
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle'
+                    },
+
+
+
+                    series: suaraKandidat,
+
+                    responsive: {
+                        rules: [{
+                            condition: {
+                                maxWidth: 500
+                            },
+                            chartOptions: {
+                                legend: {
+                                    layout: 'horizontal',
+                                    align: 'center',
+                                    verticalAlign: 'bottom'
+                                }
+                            }
+                        }]
+                    }
+
                 });
+
             });
 
 

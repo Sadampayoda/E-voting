@@ -12,16 +12,10 @@
         <div class="container">
             <div class="row welcome-container">
                 <div class="col-md-5">
-                    <h1>Welcome E-Voting</h1>
+                    <h1>Lihat Kegiatan E-Voting</h1>
                     <p>Selamat datang di halaman kami. Mohon untuk memberikan suara Anda!</p>
                     <p>Coblos dengan bijak dan bertanggung jawab.</p>
-                    <div class="input-group mb-3">
-                        <input type="number" class="form-control" id="search" placeholder="Search..." aria-label="Search"
-                            aria-describedby="button-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-dark" id="searchButton" type="button" id="button-addon2">Search NIK</button>
-                        </div>
-                    </div>
+                    
                     <div class="row ">
                         <div class="col-md-3">
                             <div class="card shadow ">
@@ -66,6 +60,96 @@
         </div>
     </div>
 
+    <section id="pemilu" class="bg-light pt-4">
+        <div class="container mb-5 mt-5">
+            <div class="row">
+                <div class="col border-bottom p-2 text-center">
+                    <h1>E-voting Saat ini</h1>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center mt-4 mb-5">
+                @foreach ($data as $item)
+                    @if ($item->status == 'Sedang Berlangsung')
+                        <div class="col-4">
+                            <div class="card" style="width: 30rem;">
+                                <img src="{{ asset('image/beranda/gambar-vote.jpg') }}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">Pemilu ini di selenggarakan tanggal {{ $item->tanggal_dari }}
+                                        dengan waktu sampai {{ $item->waktu_dari }} - {{ $item->waktu_sampai }} dan
+                                        berakhir tanggal {{ $item->tanggal_sampai }} </p>
+                                    <div class="col p-2">
+                                        <div class="d-grid">
+                                            <a href="{{ route('beranda.kandidat', $item->id) }}"
+                                                class="btn btn-dark card-link">Lihat
+                                                Kandidat</a>
+                                        </div>
+                                    </div>
+                                    <div class="col p-2">
+                                        <div class="d-grid">
+                                            <a href="{{ route('beranda.hasil',['id' => $item->id]) }}"
+                                                class="btn btn-dark card-link">Lihat
+                                                Hasil</a>
+                                        </div>
+                                    </div>
+                                    <div class="col p-2">
+                                        <div class="d-grid">
+                                            <a href="{{ route('suara.index', ['suara' => $item->id]) }}"
+                                                class="btn btn-dark card-link">Voting Sekarang</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    
+        <div class="container mb-5 mt-5">
+            <div class="row">
+                <div class="col border-bottom p-2 text-center">
+                    <h1>E-voting Segera</h1>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center mt-4 mb-5">
+                @foreach ($data as $item)
+                    @if ($item->status == 'Belum Mulai')
+                        <div class="col-4">
+                            <div class="card" style="width: 30rem;">
+                                <img src="{{ asset('image/beranda/gambar-vote.jpg') }}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">Pemilu ini di selenggarakan tanggal {{ $item->tanggal_dari }}
+                                        dengan waktu sampai {{ $item->waktu_dari }} - {{ $item->waktu_sampai }} dan
+                                        berakhir tanggal {{ $item->tanggal_sampai }} </p>
+                                    <div class="col p-2">
+                                        <div class="d-grid">
+                                            <a href="{{ route('beranda.kandidat', $item->id) }}"
+                                                class="btn btn-dark card-link">Lihat
+                                                Kandidat</a>
+                                        </div>
+                                    </div>
+                                    <div class="col p-2">
+                                        <div class="d-grid">
+                                            <a href="{{ route('beranda.kandidat', $item->id) }}"
+                                                class="btn btn-dark card-link">Lihat
+                                                Hasil</a>
+                                        </div>
+                                    </div>
+                                    <div class="col p-2">
+                                        <div class="d-grid">
+                                            <a href="#" class="btn btn-dark card-link">Voting Sekarang</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    </section>
 
     <!-- Success Modal -->
     <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel"
@@ -92,7 +176,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="errorModalLabel">Error</h5>
-                    
+
                 </div>
                 <div class="modal-body">
                     NIK not found in the database.
@@ -104,7 +188,7 @@
         </div>
     </div>
 
-    
+
 
     <script>
         $(document).ready(function() {
@@ -138,7 +222,7 @@
                 $('#successModal').modal('hide');
             });
 
-            
+
             $('#error').click(function() {
                 $('#errorModal').modal('hide');
             });

@@ -25,12 +25,18 @@ Route::controller(BerandaController::class)->group(function () {
     Route::get('/', 'index')->name('beranda.index');
     Route::post('/', 'nik')->name('beranda.nik');
     Route::get('/login', 'login')->name('beranda.login');
-    Route::get('/hasil', 'hasil')->name('beranda.hasil');
+    Route::get('/register', 'register')->name('beranda.register');
+    Route::post('/register', 'newAkun')->name('beranda.newAkun');
+    Route::get('/hasil/{id}', 'hasil')->name('beranda.hasil');
     Route::get('/lihat-kandidat/{id}', 'kandidat')->name('beranda.kandidat');
     Route::post('/login', 'validasilogin')->name('beranda.validasi');
 
+    Route::get('/profile', 'profile')->name('beranda.profile')->middleware('auth');
+    Route::get('/kegiatan/detail', 'kegiatan')->name('beranda.kegiatan');
+    Route::post('/profile/edit', 'editProfile')->name('beranda.profile.edit')->middleware('auth');
+    Route::post('/profile/password', 'password')->name('beranda.profile.password')->middleware('auth');
     Route::get('/dashboard', 'admin')->name('beranda.admin')->middleware(['auth','admin']);
-    Route::get('/logout', 'validasilogin')->name('beranda.logout')->middleware(['auth']);
+    Route::get('/logout', 'logout')->name('beranda.logout')->middleware(['auth']);
 });
 
 

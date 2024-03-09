@@ -2,16 +2,55 @@
 
 @section('content')
     <div class="content">
-        <div class="mt-5 pt-5">
-            <h1>Welcome to E-Voting</h1>
-            <div class="input-group mb-3 w-50 mx-auto">
-                <input type="text" class="form-control" placeholder="Search..." aria-label="Search"
-                    aria-describedby="button-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-dark" type="button" id="button-addon2">Search NIK</button>
+      <div class="container">
+        <div class="row welcome-container">
+            <div class="col-md-5">
+                <h1>Lihat Kegiatan E-Voting</h1>
+                <p>Selamat datang di halaman kami. Mohon untuk memberikan suara Anda!</p>
+                <p>Coblos dengan bijak dan bertanggung jawab.</p>
+                
+                <div class="row ">
+                    <div class="col-md-3">
+                        <div class="card shadow ">
+                            <div class="card-body">
+                                <h5 class="card-title">Total BEM</h5>
+                                <p class="card-text">{{ $total_user }}</p>
+                            </div>
+                        </div>
+                    </div>
+        
+                   
+                    <div class="col-md-3">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Kegiatan</h5>
+                                <p class="card-text">{{ $total_kegiatan }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Kandidat</h5>
+                                <p class="card-text">{{ $total_kandidat }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Suara</h5>
+                                <p class="card-text">{{ $total_suara }}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="col-md-6 text-center">
+                <img src="{{asset('image/beranda/welcome.png')}}" alt="Gambar Selamat Datang" class="img-fluid">
+            </div>
         </div>
+    </div>
     </div>
 
     <section id="pemilu">

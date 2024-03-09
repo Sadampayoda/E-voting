@@ -11,21 +11,7 @@
             ])
         @endif
         <div class="mt-5 pt-5">
-            <h1>Select Hasil E-Voting</h1>
-            <form action="{{route('beranda.hasil')}}" method="get">
-                <div class="input-group mb-3 w-50 mx-auto">
-                    <select class="form-control  " name="search" aria-label="Search"
-                        aria-describedby="button-addon2">
-                        <option selected disabled>Select</option>
-                        @foreach ($select as $item)
-                            <option value="{{ $item->id }}">Kegiatan : {{ $item->kegiatan }}</option>
-                        @endforeach
-                    </select>
-                    <div class="input-group-append">
-                        <button class="btn btn-dark" type="submit" id="button-addon2">Search kegiatan</button>
-                    </div>
-                </div>
-            </form>
+
         </div>
     </div>
 
@@ -36,14 +22,14 @@
                     <h1>E-voting Hasil</h1>
                 </div>
             </div>
-            <div class="row d-flex justify-content-center mt-4 mb-5" >
+            <div class="row d-flex justify-content-center mt-4 mb-5">
                 @if ($data)
-                    <div class="col">
+                    <div class="col-5">
                         <div id="hasil">
-                    
+
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-7">
                         <div id="hasil2">
 
                         </div>
@@ -53,12 +39,80 @@
         </div>
     </section>
 
+
+    <section id="pemilu">
+        <div class="container mb-5 mt-5">
+            <div class="row">
+                <div class="col border-bottom p-2 text-center">
+                    <h1>Kandidat</h1>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center mt-4 mb-5">
+
+                @foreach ($kandidat as $item)
+                    <div class="card m-4 p-3 shadow" style="width: 30rem;">
+                        <img src="{{ asset('image/kandidat/' . $item->foto) }}" width="200" height="200"
+                            class="card-img-top" alt="Foto Kandidat">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $item->nama }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Nomor Urut: {{ $loop->iteration }}</h6>
+                            <p class="card-text">{{ $item->deskripsi }}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Visi:</strong> {{ $item->visi }}</li>
+                            <li class="list-group-item"><strong>Misi:</strong> {{ $item->misi }}</li>
+                            <li class="list-group-item">
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-outline-dark " data-bs-toggle="modal"
+                                        data-bs-target="#wakil">Lihat Wakil</button>
+
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="wakil" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="wakilLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="wakilLabel">Wakil</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <img src="{{ asset('image/kandidat/' . $item->foto_wakil) }}" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="wakil">Nama Wakil</label>
+                            <input type="text" class="form-control" id="wakil" value="{{ $item->nama_wakil }}"
+                                disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- @php
 
         var_dump($hasil);
         die();
     @endphp --}}
-   
+
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -66,48 +120,72 @@
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
     @if ($data)
-        
         <script>
             document.addEventListener("DOMContentLoaded", function() {
 
-                var suaraKandidat = {!! json_encode($data) !!};
-
-
+                var suaraKandidat = {!! json_encode($chartHasil) !!};
+                console.log(suaraKandidat)
                 var dataGrafik = [];
-                suaraKandidat.forEach(function(item) {
-                    dataGrafik.push({
-                        name: item.nama,
-                        y: item.jumlah_suara
-                    });
-                });
+                // suaraKandidat.forEach(function(item) {
+                //     dataGrafik.push({
+                //         name: item.nama,
+                //         y: item.jumlah_suara
+                //     });
+                // });
 
 
 
 
                 Highcharts.chart('hasil2', {
                     chart: {
-                        type: 'column'
+                        type: 'spline'
                     },
                     title: {
-                        text: 'Grafik Suara Kandidat'
+                        text: 'Jumlah suara per tanggal'
                     },
-                    xAxis: {
-                        type: 'category',
-                        title: {
-                            text: 'Kandidat'
-                        }
+
+                    subtitle: {
+                        text: 'By Job Category. Source: <a href="https://irecusa.org/programs/solar-jobs-census/" target="_blank">IREC</a>.',
+                        align: 'left'
                     },
+
                     yAxis: {
                         title: {
                             text: 'Jumlah Suara'
                         }
                     },
-                    series: [{
-                        name: 'Jumlah Suara',
-                        colorByPoint: true,
-                        data: dataGrafik
-                    }]
+
+                    xAxis: {
+                        categories: {!! json_encode($dateRange) !!}
+                    },
+
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle'
+                    },
+
+
+
+                    series: suaraKandidat,
+
+                    responsive: {
+                        rules: [{
+                            condition: {
+                                maxWidth: 500
+                            },
+                            chartOptions: {
+                                legend: {
+                                    layout: 'horizontal',
+                                    align: 'center',
+                                    verticalAlign: 'bottom'
+                                }
+                            }
+                        }]
+                    }
+
                 });
+
             });
 
 
