@@ -62,8 +62,10 @@ class BerandaController extends Controller
 
     public function kandidat($id)
     {
+        // $data = Kandidat::where('id_kegiatan', $id)->get();
+        // dd($data);
         return view('beranda.kandidat', [
-            'data' => Kandidat::where('id_kegiatan', $id)->paginate(5),
+            'data' => Kandidat::where('id_kegiatan', $id)->get(),
             'total_user' => User::count(),
             'total_kegiatan' => Kegiatan::count(),
             'total_kandidat' => Kandidat::count(),

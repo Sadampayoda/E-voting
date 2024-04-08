@@ -69,7 +69,7 @@
             </div>
             <div class="row d-flex justify-content-center mt-4 mb-5">
                 @foreach ($data as $item)
-                    @if ($item->status == 'Sedang Berlangsung')
+                    @if ($item->status != 'Belum Mulai')
                         <div class="col-4">
                             <div class="card" style="width: 30rem;">
                                 <img src="{{ asset('image/beranda/gambar-vote.jpg') }}" class="card-img-top" alt="...">
@@ -130,13 +130,7 @@
                                                 Kandidat</a>
                                         </div>
                                     </div>
-                                    <div class="col p-2">
-                                        <div class="d-grid">
-                                            <a href="{{ route('beranda.kandidat', $item->id) }}"
-                                                class="btn btn-dark card-link">Lihat
-                                                Hasil</a>
-                                        </div>
-                                    </div>
+                                    
                                     <div class="col p-2">
                                         <div class="d-grid">
                                             <a href="#" class="btn btn-dark card-link">Voting Sekarang</a>
